@@ -94,7 +94,7 @@ The clone of a remote repository is a local copy of a remote repository. You can
 ```shell
 git clone <url/to/projectname.git> [localprojectname]    # create a local copy of the remote repository.
                                                          # important be in the repos directory when cloning
-git remore --verbose                                     # displays information about the remore repositories
+git remote --verbose                                     # displays information about the remore repositories
                                                          # associated with the local repository
 ```
 
@@ -180,12 +180,13 @@ git tag <tagname> [<commit>]  # <commit> defaults HEAD
 By default one commits to the master branch. They are fast and easy to create. Isolates the work of team members allows testing. They enable team work. Supports multiple versions.
 
 ```shell
-git branch                  # see list of branches
+git branch -a              		# see list of branches
+															# and indication which branch we are on rightnow
 ```
 
 ##### creating a branch
 ```shell
-git branch <name>           # e.g. git branch featureX
+git branch <name>          		# e.g. git branch featureX
 ```
 
 ##### checkout
@@ -209,7 +210,9 @@ git checkout -b featureX          # creates branch and checkout branch
 is used after a topic branch has been merged successfully
 
 ```shell
-git branch -d featureX
+git branch -d featureX									# lower case d deletes only if branch merged to master
+																				# upper case D deletes branch no matter if merged or not
+																			 	# checkout master branch before deleting the other branch
 ```
 
 
@@ -325,3 +328,93 @@ git push -u origin master # pushing to remote repository
 ```
 
 rule: always pulling before pushing
+
+
+
+## Remote Branching
+
+The following section describes the workflow to do when working with branches on a remote repository collaboratively. 
+
+##### Checkout master
+
+First use checkout to switch to the master branch. Then pull the latest version to make sure that you start implementing a new feature from the latest version of the master branch. 
+
+```shell
+git checkout master				# Switch to the master branch
+
+git pull origin master		# Pull all updates to local repository
+```
+
+
+
+##### Create new branch
+
+Create a new branch as described above.
+
+```shell
+git checkout -b <branch-name>				# create new branch with <branch-name> name
+																		# and directly switch to it
+```
+
+
+
+##### Stage and commit branch changes locally 
+
+```shell
+git add <file-names>
+git commit -m "<commit-message>"
+```
+
+
+
+##### Push changes
+
+Pushing here requires the ```origin``` reference again so that it knows to which line to assign the new branch and the updates to. 
+
+```shell
+git push origin <branch-name>					# Pushing changes to branch 
+																			# accociated to origin 
+```
+
+
+
+##### Pull request
+
+Now there are two branches on github, the origin and the ```<branch-name>``` branch. If we were finished with the feature we developed at the ```<branch-name>``` branch, we would like to merge it to the origin or master branch. To do so, we need to perform a ```pull request```. 
+
+One simple version to perform a ```pull request``` is to do it directly in github. This is quite straight forward. 
+
+1. Go to the ```pull request``` section in the git hub repositiory. 
+2. There will be many information about the changes made. Also are there possibilities to leave comments  and to assign reqievers for the pull request. 
+3. Finally, it everything is alright and the changes have been reviewed, one just clicks the big **Merge Pull Request** button to merge the feature into the origin. 
+
+
+
+### Removing fully merged branches
+
+##### Remote Branches 
+
+Fully merged remote branches will show up when using the ```git branch -a``` command. TO get rig of these dead branches, the following commany can be used. 
+
+```shell
+git fetch --prune
+
+# or which is the same as above
+git fetch -p
+```
+
+
+
+##### Local Branches
+
+Fully merged local branches can be easily deleted using the ```-d``` comman with the ```git branch``` statement. The ```-D``` parameter can be used if a branch should be deleted no matter what. 
+
+```shell
+git branch -d <branch-name> 			# will delete <branch-name> branch
+																	# will through an error if deleting might be unsafe
+
+git branch -D <branch-name>				# will delete <branch-name> branch no matter what
+```
+
+
+
