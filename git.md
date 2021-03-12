@@ -340,9 +340,9 @@ The following section describes the workflow to do when working with branches on
 First use checkout to switch to the master branch. Then pull the latest version to make sure that you start implementing a new feature from the latest version of the master branch. 
 
 ```shell
-git checkout master				# Switch to the master branch
+git checkout master			# Switch to the master branch
 
-git pull origin master		# Pull all updates to local repository
+git pull origin master			# Pull all updates to local repository
 ```
 
 
@@ -372,8 +372,8 @@ git commit -m "<commit-message>"
 Pushing here requires the ```origin``` reference again so that it knows to which line to assign the new branch and the updates to. 
 
 ```shell
-git push origin <branch-name>					# Pushing changes to branch 
-																			# accociated to origin 
+git push origin <branch-name>				# Pushing changes to branch 
+							# accociated to origin 
 ```
 
 
@@ -413,7 +413,7 @@ Fully merged local branches can be easily deleted using the ```-d``` comman with
 git branch -d <branch-name> 			# will delete <branch-name> branch
 																	# will through an error if deleting might be unsafe
 
-git branch -D <branch-name>				# will delete <branch-name> branch no matter what
+git branch -D <branch-name>			# will delete <branch-name> branch no matter what
 ```
 
 
